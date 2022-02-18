@@ -54,8 +54,8 @@ import plotly.graph_objects as go
 
 
 fig8= go.Figure()
-fig8.add_trace(go.Bar(x=df['Year'],y=df['User Rating'],name='Genre',marker_color='indianred'))
-fig8.add_trace(go.Bar(x=df['Year'],y=df['User Rating'],name='Genre',marker_color='lightsalmon'))
+fig8.add_trace(go.Bar(x=df['Year'],y=df['User Rating'],name='Fiction',marker_color='indianred'))
+fig8.add_trace(go.Bar(x=df['Year'],y=df['User Rating'],name='Non Fiction',marker_color='lightsalmon'))
 # Here we modify the tickangle of the xaxis, resulting in rotated labels.
 fig8.update_layout(barmode='group', xaxis_tickangle=-45)
 
