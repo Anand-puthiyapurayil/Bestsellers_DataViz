@@ -33,8 +33,9 @@ x=df['User Rating']
 group_labels = ['User rating']
 fig3 = ff.create_distplot([x],group_labels,bin_size=0.1)
 
+top_books=df['Name'].value_counts()[:50].rename_axis('Common Books').reset_index(name='count')
+fig4= px.treemap(top_books, path=['Common Books'], values='count',title='TOP 50 MULTIPLE TIMES BESTSELLERS',color = 'count')
 
-fig4=px.histogram(y=df['Price'],x=df['Genre'],color=df['Genre'])
 
 
 
@@ -97,7 +98,7 @@ app.layout = html.Div(children=[
         ),
     ]),
     html.Div([
-        html.H2(children='Price based on fiction and non fiction'),
+        html.H2(children='Tree Map for TOP 50 Bestsellers'),
         html.Div(children='''
              Bar Chart (Total Score)
          '''),
