@@ -1,0 +1,185 @@
+<html>
+<head>
+<title>Bestsellers.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6;}
+.s1 { color: #cc7832;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+.s4 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Bestsellers.py</font>
+</center></td></tr></table>
+<pre>
+<span class="s1">from </span><span class="s0">dash </span><span class="s1">import  </span><span class="s0">dcc</span><span class="s1">, </span><span class="s0">html</span><span class="s1">, </span><span class="s0">dash</span>
+<span class="s1">import </span><span class="s0">pandas </span><span class="s1">as </span><span class="s0">pd</span>
+<span class="s1">import </span><span class="s0">plotly.express </span><span class="s1">as </span><span class="s0">px</span>
+
+
+
+<span class="s0">external_stylesheets = [</span><span class="s2">'https://codepen.io/chriddyp/pen/bWLwgP.css'</span><span class="s0">]</span>
+
+
+
+<span class="s0">app = dash.Dash(__name__</span><span class="s1">, </span><span class="s0">external_stylesheets=external_stylesheets)</span>
+
+<span class="s0">df = pd.read_csv(</span><span class="s2">'C://Users//Anand//Desktop//dataviz/bestsellers_amazon.csv'</span><span class="s0">)</span>
+
+<span class="s0">print(df.head(</span><span class="s3">10</span><span class="s0">))</span>
+
+<span class="s0">print(df.isnull().sum())</span>
+<span class="s0">print(df.describe())</span>
+<span class="s0">print(df.info())</span>
+<span class="s0">print (</span><span class="s2">f&quot;Total number of rows : </span><span class="s1">{</span><span class="s0">df.shape[</span><span class="s3">0</span><span class="s0">]</span><span class="s1">}\n</span><span class="s2">Total number of columns : </span><span class="s1">{</span><span class="s0">df.shape[</span><span class="s3">1</span><span class="s0">]</span><span class="s1">}</span><span class="s2">&quot;</span><span class="s0">)</span>
+
+
+<span class="s0">fig1=px.histogram(df</span><span class="s1">,</span><span class="s0">x=</span><span class="s2">'User Rating'</span><span class="s1">,</span><span class="s0">barmode=</span><span class="s2">&quot;group&quot;</span><span class="s1">,</span><span class="s0">nbins=</span><span class="s3">40</span><span class="s1">,</span><span class="s0">)</span>
+
+<span class="s0">fig2=px.histogram(x=df[</span><span class="s2">'Genre'</span><span class="s0">]</span><span class="s1">,</span><span class="s0">color=df[</span><span class="s2">'Genre'</span><span class="s0">])</span>
+
+
+<span class="s1">import </span><span class="s0">plotly.figure_factory </span><span class="s1">as </span><span class="s0">ff</span>
+<span class="s1">import </span><span class="s0">numpy </span><span class="s1">as </span><span class="s0">np</span>
+<span class="s0">np.random.seed(</span><span class="s3">40</span><span class="s0">)</span>
+<span class="s0">x=df[</span><span class="s2">'User Rating'</span><span class="s0">]</span>
+<span class="s0">group_labels = [</span><span class="s2">'User rating'</span><span class="s0">]</span>
+<span class="s0">fig3 = ff.create_distplot([x]</span><span class="s1">,</span><span class="s0">group_labels</span><span class="s1">,</span><span class="s0">bin_size=</span><span class="s3">0.1</span><span class="s0">)</span>
+
+
+<span class="s0">fig4=px.histogram(y=df[</span><span class="s2">'Price'</span><span class="s0">]</span><span class="s1">,</span><span class="s0">x=df[</span><span class="s2">'Genre'</span><span class="s0">]</span><span class="s1">,</span><span class="s0">color=df[</span><span class="s2">'Genre'</span><span class="s0">])</span>
+
+
+
+<span class="s0">fig5=px.histogram(y=df[</span><span class="s2">'User Rating'</span><span class="s0">]</span><span class="s1">,</span><span class="s0">x=df[</span><span class="s2">'Genre'</span><span class="s0">]</span><span class="s1">,</span><span class="s0">color=df[</span><span class="s2">'Genre'</span><span class="s0">])</span>
+
+
+
+
+<span class="s0">fig6=px.histogram(df[</span><span class="s2">'Price'</span><span class="s0">])</span>
+
+
+
+<span class="s0">x=df[</span><span class="s2">'Genre'</span><span class="s0">].value_counts()</span>
+<span class="s0">fig7=px.pie( values=[x[</span><span class="s3">0</span><span class="s0">]</span><span class="s1">,</span><span class="s0">x[</span><span class="s3">1</span><span class="s0">]]</span><span class="s1">, </span><span class="s0">names=[</span><span class="s2">'Non Fiction'</span><span class="s1">,</span><span class="s2">'Fiction'</span><span class="s0">]</span><span class="s1">, </span><span class="s0">title=</span><span class="s2">'Population of European continent'</span><span class="s0">)</span>
+
+<span class="s1">import </span><span class="s0">plotly.graph_objects </span><span class="s1">as </span><span class="s0">go</span>
+
+
+<span class="s0">fig8= go.Figure()</span>
+<span class="s0">fig8.add_trace(go.Bar(x=df[</span><span class="s2">'Year'</span><span class="s0">]</span><span class="s1">,</span><span class="s0">y=df[</span><span class="s2">'User Rating'</span><span class="s0">]</span><span class="s1">,</span><span class="s0">name=</span><span class="s2">'Genre'</span><span class="s1">,</span><span class="s0">marker_color=</span><span class="s2">'indianred'</span><span class="s0">))</span>
+<span class="s0">fig8.add_trace(go.Bar(x=df[</span><span class="s2">'Year'</span><span class="s0">]</span><span class="s1">,</span><span class="s0">y=df[</span><span class="s2">'User Rating'</span><span class="s0">]</span><span class="s1">,</span><span class="s0">name=</span><span class="s2">'Genre'</span><span class="s1">,</span><span class="s0">marker_color=</span><span class="s2">'lightsalmon'</span><span class="s0">))</span>
+<span class="s4"># Here we modify the tickangle of the xaxis, resulting in rotated labels.</span>
+<span class="s0">fig8.update_layout(barmode=</span><span class="s2">'group'</span><span class="s1">, </span><span class="s0">xaxis_tickangle=-</span><span class="s3">45</span><span class="s0">)</span>
+
+
+<span class="s0">fig9=px.scatter(df[</span><span class="s2">'Reviews'</span><span class="s0">]</span><span class="s1">,</span><span class="s0">df[</span><span class="s2">'Price'</span><span class="s0">]</span><span class="s1">,</span><span class="s0">color=df[</span><span class="s2">'Genre'</span><span class="s0">])</span>
+
+
+<span class="s0">app.layout = html.Div(children=[</span>
+    <span class="s4"># All elements from the top of the page</span>
+    <span class="s0">html.Div([</span>
+        <span class="s0">html.H2(children=</span><span class="s2">'User Rating'</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">html.Div(children=</span><span class="s2">''' 
+            Bar Chart (Total Score) 
+        '''</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">dcc.Graph(</span>
+            <span class="s0">id=</span><span class="s2">'graph1'</span><span class="s1">,</span>
+            <span class="s0">figure=fig1</span>
+        <span class="s0">)</span><span class="s1">,</span>
+    <span class="s0">])</span><span class="s1">,</span>
+    <span class="s4"># New Div for all elements in the new 'row' of the page</span>
+    <span class="s0">html.Div([</span>
+        <span class="s0">html.H2(children=</span><span class="s2">'Genre'</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">html.Div(children=</span><span class="s2">''' 
+             Bar Chart (Total Score) 
+         '''</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">dcc.Graph(</span>
+            <span class="s0">id=</span><span class="s2">'graph2'</span><span class="s1">,</span>
+            <span class="s0">figure=fig2</span>
+        <span class="s0">)</span><span class="s1">,</span>
+    <span class="s0">])</span><span class="s1">,</span>
+    <span class="s0">html.Div([</span>
+        <span class="s0">html.H2(children=</span><span class="s2">'User Rating'</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">html.Div(children=</span><span class="s2">''' 
+             Bar Chart (Total Score) 
+         '''</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">dcc.Graph(</span>
+            <span class="s0">id=</span><span class="s2">'graph3'</span><span class="s1">,</span>
+            <span class="s0">figure=fig3</span>
+        <span class="s0">)</span><span class="s1">,</span>
+    <span class="s0">])</span><span class="s1">,</span>
+    <span class="s0">html.Div([</span>
+        <span class="s0">html.H2(children=</span><span class="s2">'Price based on fiction and non fiction'</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">html.Div(children=</span><span class="s2">''' 
+             Bar Chart (Total Score) 
+         '''</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">dcc.Graph(</span>
+            <span class="s0">id=</span><span class="s2">'graph4'</span><span class="s1">,</span>
+            <span class="s0">figure=fig4</span>
+        <span class="s0">)</span><span class="s1">,</span>
+    <span class="s0">])</span><span class="s1">,</span>
+    <span class="s0">html.Div([</span>
+        <span class="s0">html.H2(children=</span><span class="s2">'user rating based on fiction and non fiction'</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">html.Div(children=</span><span class="s2">''' 
+             Bar Chart (Total Score) 
+         '''</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">dcc.Graph(</span>
+            <span class="s0">id=</span><span class="s2">'graph5'</span><span class="s1">,</span>
+            <span class="s0">figure=fig5</span>
+        <span class="s0">)</span><span class="s1">,</span>
+    <span class="s0">])</span><span class="s1">,</span>
+    <span class="s0">html.Div([</span>
+        <span class="s0">html.H2(children=</span><span class="s2">'Price'</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">html.Div(children=</span><span class="s2">''' 
+             Bar Chart (Total Score) 
+         '''</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">dcc.Graph(</span>
+            <span class="s0">id=</span><span class="s2">'graph6'</span><span class="s1">,</span>
+            <span class="s0">figure=fig6</span>
+        <span class="s0">)</span><span class="s1">,</span>
+    <span class="s0">])</span><span class="s1">,</span>
+    <span class="s0">html.Div([</span>
+        <span class="s0">html.H2(children=</span><span class="s2">'Count of Genre'</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">html.Div(children=</span><span class="s2">''' 
+             Bar Chart (Total Score) 
+         '''</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">dcc.Graph(</span>
+            <span class="s0">id=</span><span class="s2">'graph7'</span><span class="s1">,</span>
+            <span class="s0">figure=fig7</span>
+        <span class="s0">)</span><span class="s1">,</span>
+    <span class="s0">])</span><span class="s1">,</span>
+    <span class="s0">html.Div([</span>
+        <span class="s0">html.H2(children=</span><span class="s2">'User Rating based on year'</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">html.Div(children=</span><span class="s2">''' 
+             Bar Chart (Total Score) 
+         '''</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">dcc.Graph(</span>
+            <span class="s0">id=</span><span class="s2">'graph8'</span><span class="s1">,</span>
+            <span class="s0">figure=fig8</span>
+        <span class="s0">)</span><span class="s1">,</span>
+    <span class="s0">])</span><span class="s1">,</span>
+    <span class="s0">html.Div([</span>
+        <span class="s0">html.H2(children=</span><span class="s2">'User Rating based on Price'</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">html.Div(children=</span><span class="s2">''' 
+             Bar Chart (Total Score) 
+         '''</span><span class="s0">)</span><span class="s1">,</span>
+        <span class="s0">dcc.Graph(</span>
+            <span class="s0">id=</span><span class="s2">'graph9'</span><span class="s1">,</span>
+            <span class="s0">figure=fig9</span>
+        <span class="s0">)</span><span class="s1">,</span>
+    <span class="s0">])</span><span class="s1">,</span>
+
+<span class="s0">])</span>
+
+<span class="s1">if </span><span class="s0">__name__ == </span><span class="s2">'__main__'</span><span class="s0">:</span>
+    <span class="s0">app.run_server(debug=</span><span class="s1">True</span><span class="s0">)</span>
+
+</pre>
+</body>
+</html>

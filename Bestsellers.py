@@ -21,7 +21,7 @@ print(df.info())
 print (f"Total number of rows : {df.shape[0]}\nTotal number of columns : {df.shape[1]}")
 
 
-fig1=px.histogram(df,x='User Rating',barmode="group",nbins=40,)
+fig1=px.histogram(df,x='User Rating',barmode="group",nbins=2,color=df['User Rating'])
 
 fig2=px.histogram(x=df['Genre'],color=df['Genre'])
 
@@ -43,7 +43,7 @@ fig5=px.histogram(y=df['User Rating'],x=df['Genre'],color=df['Genre'])
 
 
 
-fig6=px.histogram(df['Price'])
+fig6=px.histogram(df['Price'],color=df['Genre'])
 
 
 
