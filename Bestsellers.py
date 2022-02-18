@@ -21,9 +21,14 @@ print(df.info())
 print (f"Total number of rows : {df.shape[0]}\nTotal number of columns : {df.shape[1]}")
 
 
-fig1=px.histogram(df,x='User Rating',barmode="group",nbins=2,color=df['User Rating'])
+fig1=px.histogram(df,x='User Rating',barmode="group",nbins=1,color=df['User Rating'])
 
-fig2=px.histogram(x=df['Genre'],color=df['Genre'])
+df1 = df.groupby('Author').mean().sort_values('Reviews',ascending=False).reset_index().head(10)
+
+fig2 = px.scatter(df1, x='User Rating', y='Reviews', color='Author')
+
+fig2.update_traces(marker=dict(size=12,line=dict(width=2,color='DarkSlateGrey')),selector=dict(mode='markers'))
+# fig2=px.histogram(x=df['Genre'],color=df['Genre'])
 
 
 import plotly.figure_factory as ff
@@ -61,7 +66,7 @@ fig8.add_trace(go.Bar(x=df['Year'],y=df['User Rating'],name='Non Fiction',marker
 fig8.update_layout(barmode='group', xaxis_tickangle=-45)
 
 
-fig9=px.scatter(df['Reviews'],df['Price'],color=df['Genre'])
+fig9=px.scatter(x=df['Reviews'],y=df['Price'],color=df['Genre'])
 
 
 app.layout = html.Div(children=[
@@ -78,7 +83,7 @@ app.layout = html.Div(children=[
     ]),
     # New Div for all elements in the new 'row' of the page
     html.Div([
-        html.H2(children='Genre'),
+        html.H2(children='Top 10 Authors with High reviews and User Rating'),
         html.Div(children='''
              Bar Chart (Total Score)
          '''),
@@ -118,7 +123,7 @@ app.layout = html.Div(children=[
         ),
     ]),
     html.Div([
-        html.H2(children='Price'),
+        html.H2(children='Price Based on Genre'),
         html.Div(children='''
              Bar Chart (Total Score)
          '''),
@@ -148,7 +153,7 @@ app.layout = html.Div(children=[
         ),
     ]),
     html.Div([
-        html.H2(children='User Rating based on Price'),
+        html.H2(children='Scatter plot based on Price and Reviews'),
         html.Div(children='''
              Bar Chart (Total Score)
          '''),
